@@ -3,7 +3,7 @@ import sbt.Project.projectToRef
 lazy val clients = Seq(scalajsclient)
 lazy val scalaV = "2.11.6"
 
-lazy val playserver = (project in file("play")).settings(
+lazy val playserver = (project in file("play")).settings(Seq(
   name := "play",
   scalaVersion := scalaV,
   scalaJSProjects := clients,
@@ -11,8 +11,9 @@ lazy val playserver = (project in file("play")).settings(
     "com.vmunier" %% "play-scalajs-scripts" % "0.3.0",
     "org.webjars" % "jquery" % "1.11.1"
   ),
-  routesGenerator := InjectedRoutesGenerator
-).enablePlugins(PlayScala).
+  routesGenerator := InjectedRoutesGenerator) ++
+  dockerSettings
+).enablePlugins(PlayScala).enablePlugins(DockerPlugin).
   aggregate(clients.map(projectToRef): _*).
   dependsOn(sharedJvm)
 
@@ -42,3 +43,7 @@ onLoad in Global := (Command.process("project playserver", _: State)) compose (o
 
 // for Eclipse users
 //EclipseKeys.skipParents in ThisBuild := false
+//
+lazy val dockerSettings = Seq(
+  dockerExposedPorts := Seq(9000)
+)
