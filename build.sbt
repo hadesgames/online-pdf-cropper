@@ -41,4 +41,4 @@ lazy val sharedJs = shared.js
 onLoad in Global := (Command.process("project playserver", _: State)) compose (onLoad in Global).value
 
 // for Eclipse users
-EclipseKeys.skipParents in ThisBuild := false
+//EclipseKeys.skipParents in ThisBuild := false
