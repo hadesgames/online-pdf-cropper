@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/pdfprocessor -Dhttp.port=${PORT}
+web: target/universal/stage/bin/play -Dhttp.port=${PORT}
