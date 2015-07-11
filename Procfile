@@ -1,2 +1,1 @@
-web: find . -name \* -print
-#web: target/universal/stage/bin/pdfcropper  -Dhttp.port=${PORT}
+web: play/target/universal/stage/bin/play  -Dhttp.port=${PORT}
