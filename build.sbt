@@ -1,3 +1,4 @@
+import com.typesafe.sbt.packager.docker.ExecCmd
 import sbt.Project.projectToRef
 
 lazy val clients = Seq(scalajsclient)
@@ -53,5 +54,8 @@ onLoad in Global := (Command.process("project playserver", _: State)) compose (o
 //EclipseKeys.skipParents in ThisBuild := false
 //
 lazy val dockerSettings = Seq(
-  dockerExposedPorts := Seq(9000)
+  dockerExposedPorts := Seq(9000),
+  dockerCommands := {
+    Seq(dockerCommands.value.head, ExecCmd("RUN", "apt-get", "update"), ExecCmd("RUN", "apt-get", "-y", "install", "ghostscript")) ++ dockerCommands.value.tail
+  }
 )
