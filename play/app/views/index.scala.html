@@ -2,6 +2,15 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message)
+@helper.form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
+
+    <input type="file" name="pdf"/>
+    <label>X offset: </label><input type="number" name="x_offset" value="50"/>
+    <label>Y offset: </label><input type="number" name="y_offset" value="0"/>
+
+    <p>
+        <input type="submit">
+    </p>
+}
 
 }

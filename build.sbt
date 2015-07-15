@@ -15,7 +15,7 @@ lazy val playserver = (project in file("play")).settings(Seq(
   dockerSettings
 ).enablePlugins(PlayScala).enablePlugins(DockerPlugin).
   aggregate(clients.map(projectToRef): _*).
-  dependsOn(sharedJvm)
+  dependsOn(sharedJvm, pdf)
 
 lazy val scalajsclient = (project in file("scalajs")).settings(
   name := "scalajs",
@@ -34,6 +34,14 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared")).
   settings(scalaVersion := scalaV).
   jsConfigure(_ enablePlugins ScalaJSPlay).
   jsSettings(sourceMapsBase := baseDirectory.value / "..")
+
+lazy val pdf = (project in file("pdf")).settings(Seq(
+  name := "pdf",
+  scalaVersion := scalaV,
+  libraryDependencies ++= Seq(
+    "com.itextpdf" % "itextpdf" % "5.5.6"
+  )
+))
 
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js
